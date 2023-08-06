@@ -8,8 +8,8 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      Comment.belongsTo(models.Startup);
-      Comment.belongsTo(models.Citizen);
+      Like.belongsTo(models.Startup);
+      Like.belongsTo(models.Citizen);
     }
   }
   Like.init(

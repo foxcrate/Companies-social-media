@@ -2,7 +2,10 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
-const sequelize = require("./util/database/connction");
+const citizenRoutes = require("./routes/citizen.route");
+const startupRoutes = require("./routes/startup.route");
+const citizenAuth = require("./middlewares/citizenAuth.middleware");
+// const { Citizen, Startup } = require("./models");
 const cors = require("cors");
 require("dotenv/config");
 
@@ -15,14 +18,7 @@ app.use(morgan("tiny"));
 
 const api = process.env.API_URL;
 
-//Routes
-// const categoriesRoutes = require("./routes/categories");
+app.use("/citizens", citizenRoutes);
+app.use("/startups", startupRoutes);
 
-// app.use(`${api}/categories`, categoriesRoutes);
-
-//Database
-
-//Server
-app.listen(8000, () => {
-  console.log("server is running http://localhost:8000");
-});
+module.exports = app;
