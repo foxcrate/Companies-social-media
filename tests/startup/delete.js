@@ -2,20 +2,21 @@ const supertest = require("supertest");
 const app = require("../../app");
 const { Startup } = require("../../models");
 const { generateRandomName } = require("../util/createRandomNames");
+const savedErrors = require("../../util/errors");
 
 module.exports = () => {
   describe("Delete Startup", () => {
-    test("Validate non existing startup id", async () => {
-      let validationErrors = [
-        {
-          path: "id",
-          msg: "wrong startup id",
-        },
-      ];
+    test("Check non existing startup id", async () => {
+      let error = {
+        code: "STARTUP_NOT_FOUND",
+        msg: savedErrors.get("en").get("STARTUP_NOT_FOUND"),
+      };
       let theId = 2;
-      let res = await supertest(app).delete(`/startups/${theId}`).send();
+      let res = await supertest(app)
+        .delete(`${process.env.API_V1_URL}/startups/${theId}`)
+        .send();
       expect(res.statusCode).toBe(400);
-      expect(res.body.validationErrors).toEqual(validationErrors);
+      expect(res.body.error).toEqual(error);
     });
     test("Record deleted from the database", async () => {
       let lastStartup = await Startup.findAll({
@@ -29,13 +30,13 @@ module.exports = () => {
       let recordsBeforeDelete = await Startup.count();
 
       let res = await supertest(app)
-        .delete(`/startups/${returnObject.id}`)
+        .delete(`${process.env.API_V1_URL}/startups/${returnObject.id}`)
         .send();
 
       let recordsAfterDelete = await Startup.count();
       expect(res.statusCode).toBe(200);
       expect(recordsAfterDelete).toBe(recordsBeforeDelete - 1);
-      expect(res.body).toEqual(returnObject);
+      expect(res.body.data).toEqual(returnObject);
     });
   });
 };

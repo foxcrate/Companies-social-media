@@ -1,50 +1,64 @@
 const { Citizen } = require("../models");
 const citizenService = require("../services/citizen.service");
 const nodemailer = require("nodemailer");
+const sendResponse = require("../util/sendResponse.util");
 
-exports.register = async (req, res) => {
+exports.register = async (req, res, next) => {
   try {
     let data = await citizenService.register(req.body);
-    res.send(data);
+    sendResponse(res, 200, data, null);
   } catch (err) {
     // console.log("error in controller: ", err);
-    res.status(400).send(err);
+    // sendResponse(res, 400, null, err);
+    next(err);
   }
 };
 
-exports.signin = async (req, res) => {
+exports.signin = async (req, res, next) => {
   try {
     let token = await citizenService.signin(req.body);
-    let return_data = { data: { token: token } };
-    res.send(return_data);
+    let return_data = { token: token };
+    // res.send(return_data);
+    sendResponse(res, 200, return_data, null);
   } catch (err) {
     // console.log("error in controller: ", err);
-    res.status(400).send(err);
+    // res.status(400).send(err);
+    // sendResponse(res, 400, null, err);
+    next(err);
   }
 };
 
 exports.resetPassword = async (req, res, next) => {
   try {
     console.log("req.body:", req.body.token);
-    const token = req.body.token.split(" ")[1];
+    // const token = req.body.token.split(" ")[1];
+    let authorizationHeader = req.header("Authorization");
+    let token = authorizationHeader.split(" ")[1];
+
     const password = req.body.password;
     const data = await citizenService.resetPassword(token, password);
-    res.status(200).json({
-      data: data,
-    });
-  } catch (error) {
-    res.status(400).send(error);
+    // res.status(200).json({
+    //   data: data,
+    // });
+    sendResponse(res, 200, data, null);
+  } catch (err) {
+    // res.status(400).send(error);
+    // sendResponse(res, 400, null, error);
+    next(err);
   }
 };
 
-exports.sendResetPasswordMail = async (req, res) => {
+exports.sendResetPasswordMail = async (req, res, next) => {
   try {
     let data = await citizenService.sendResetPasswordMail(req.body);
     console.log("data in controller:", data);
-    res.send({ data: data });
+    // res.send({ data: data });
+    sendResponse(res, 200, data, null);
   } catch (err) {
     // console.log("error in controller: ", err);
-    res.status(400).send(err);
+    // res.status(400).send(err);
+    // sendResponse(res, 400, null, err);
+    next(err);
   }
 };
 

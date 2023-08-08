@@ -3,35 +3,33 @@ const { Startup, Applicant } = require("../../models");
 
 const schema = [
   body("name")
-    .notEmpty()
+    // .notEmpty()
     .isLength({ min: 3 })
-    .withMessage("name must be at least 3 characters long")
-    .custom(async (value) => {
-      if (value) {
-        let startup = await Startup.findOne({ where: { name: value } });
-        if (startup) {
-          throw new Error("repeated startup name");
-        }
-      }
-    }),
+    .withMessage("name must be at least 3 characters long"),
+  // .custom(async (value) => {
+  //   if (value) {
+  //     let startup = await Startup.findOne({ where: { name: value } });
+  //     if (startup) {
+  //       throw new Error("repeated startup name");
+  //     }
+  //   }
+  // }),
   body("statue")
-    .notEmpty()
-    .withMessage("statue can't be empty")
+    // .notEmpty()
+    // .withMessage("statue can't be empty")
     .isIn(["Pending", "Accepted", "Rejected"])
-    .withMessage("unknown statue"),
+    .withMessage("unsuitable statue"),
   body("description")
-    .isString()
+    // .isString()
     .isLength({ min: 10 })
     .withMessage("description can't be less than 10 charcters"),
-  body("applicantId")
-    .notEmpty()
-    .withMessage("applicantId is not provided")
-    .custom(async (value) => {
-      let applicant = await Applicant.findByPk(value);
-      if (!applicant) {
-        throw new Error("Applicant not exist");
-      }
-    }),
+  body("applicantId").notEmpty().withMessage("applicantId is not provided"),
+  // .custom(async (value) => {
+  //   let applicant = await Applicant.findByPk(value);
+  //   if (!applicant) {
+  //     throw new Error("Applicant not exist");
+  //   }
+  // }),
 ];
 
 module.exports = schema;

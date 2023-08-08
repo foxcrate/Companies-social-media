@@ -1,8 +1,8 @@
 const express = require("express");
-const validateRequestSchema = require("../middlewares/validateRequestSchema.middleware");
-const startupCreateSchema = require("../validationSchema/startup/create.schema");
-const startupCheckIdSchema = require("../validationSchema/startup/checkId.schema");
-const startupController = require("../controllers/startup.controller");
+const validateRequestSchema = require("../../middlewares/validateRequestSchema.middleware");
+const startupCreateSchema = require("../../validationSchema/startup/create.schema");
+const startupCheckIdSchema = require("../../validationSchema/startup/checkId.schema");
+const startupController = require("../../controllers/startup.controller");
 
 const router = express.Router();
 
@@ -12,8 +12,8 @@ router.get("/", startupController.getAll);
 
 router.get(
   "/:id",
-  startupCheckIdSchema,
-  validateRequestSchema,
+  // startupCheckIdSchema,
+  // validateRequestSchema,
   startupController.getOne
 );
 
@@ -26,7 +26,7 @@ router.post(
 
 router.put(
   "/:id",
-  startupCheckIdSchema,
+  // startupCheckIdSchema,
   startupCreateSchema,
   validateRequestSchema,
   startupController.update
@@ -34,8 +34,8 @@ router.put(
 
 router.delete(
   "/:id",
-  startupCheckIdSchema,
-  validateRequestSchema,
+  // startupCheckIdSchema,
+  // validateRequestSchema,
   startupController.delete
 );
 

@@ -12,9 +12,7 @@ exports.getAll = async (req) => {
 exports.getOne = async (req) => {
   try {
     let theStartup = await Startup.findByPk(req.params.id);
-    if (theStartup == null) {
-      throw { code: "NOT_EXISTED_STARTUP", msg: "no id provided" };
-    }
+    if (!theStartup) throw { code: "STARTUP_NOT_FOUND" };
     return theStartup;
   } catch (error) {
     throw error;
@@ -23,6 +21,15 @@ exports.getOne = async (req) => {
 
 exports.create = async (req) => {
   try {
+    let startup = await Startup.findOne({ where: { name: req.body.name } });
+    if (startup) {
+      throw { code: "REPEATED_NAME" };
+    }
+    let applicant = await Applicant.findByPk(req.body.applicantId);
+    if (!applicant) {
+      throw { code: "APPLICANT_NOT_FOUND" };
+    }
+
     let newStartup = await Startup.create({
       name: req.body.name,
       statue: req.body.statue,
@@ -38,6 +45,18 @@ exports.create = async (req) => {
 exports.update = async (req) => {
   try {
     let theStartup = await Startup.findByPk(req.params.id);
+    if (!theStartup) throw { code: "STARTUP_NOT_FOUND" };
+
+    let startup = await Startup.findOne({ where: { name: req.body.name } });
+    if (startup && startup.id != req.params.id) {
+      throw { code: "REPEATED_NAME" };
+    }
+
+    let applicant = await Applicant.findByPk(req.body.applicantId);
+    if (!applicant) {
+      throw { code: "APPLICANT_NOT_FOUND" };
+    }
+
     let updatedStartup = theStartup.update({
       name: req.body.name,
       statue: req.body.statue,
@@ -53,6 +72,7 @@ exports.update = async (req) => {
 exports.delete = async (req) => {
   try {
     let theStartup = await Startup.findByPk(req.params.id);
+    if (!theStartup) throw { code: "STARTUP_NOT_FOUND" };
     let deletedStartup = await theStartup.destroy();
     return deletedStartup;
   } catch (error) {

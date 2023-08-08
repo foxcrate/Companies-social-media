@@ -1,4 +1,4 @@
-module.exports = paginate = async (model, page, perPage) => {
+module.exports = async (model, page, perPage) => {
   page = parseInt(page);
   perPage = parseInt(perPage);
   const startIndex = (page - 1) * perPage;

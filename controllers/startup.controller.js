@@ -1,8 +1,10 @@
 const { Startup, Applicant } = require("../models");
 const startupService = require("../services/startup.service");
 const paginate = require("../util/paginate.util");
+const util = require("util");
+const sendResponse = require("../util/sendResponse.util");
 
-exports.getAll = async (req, res) => {
+exports.getAll = async (req, res, next) => {
   try {
     // default pagination values
     let page = 0;
@@ -10,54 +12,68 @@ exports.getAll = async (req, res) => {
     req.query.page ? (page = req.query.page) : (page = 1);
     req.query.perPage ? (perPage = req.query.perPage) : (perPage = 10);
     let data = await paginate(Startup, page, perPage);
-    res.send(data);
+    sendResponse(res, 200, data, null);
   } catch (err) {
-    console.log("error in controller: ", err);
-    res.status(400).send(err);
+    // console.log("error in controller: ", err);
+    // err = util.inspect(err, true, null);
+    // sendResponse(res, 400, null, err);
+    next(err);
   }
 };
 
-exports.getOne = async (req, res) => {
+exports.getOne = async (req, res, next) => {
   try {
     let data = await startupService.getOne(req);
-    res.send(data);
+    // res.send(data);
+    sendResponse(res, 200, data, null);
   } catch (err) {
-    console.log("error in controller: ", err);
-    res.status(400).send(err);
+    // console.log("error in controller: ", err);
+    // res.status(400).send(err);
+    // sendResponse(res, 400, null, err);
+    next(err);
   }
 };
 
-exports.create = async (req, res) => {
+exports.create = async (req, res, next) => {
   try {
     let data = await startupService.create(req);
-    res.send(data);
+    // res.send(data);
+    sendResponse(res, 200, data, null);
   } catch (err) {
-    console.log("error in controller: ", err);
-    res.status(400).send(err);
+    // console.log("error in controller: ", err);
+    // res.status(400).send(err);
+    // sendResponse(res, 400, null, err);
+    next(err);
   }
 };
 
-exports.update = async (req, res) => {
+exports.update = async (req, res, next) => {
   try {
     let data = await startupService.update(req);
-    res.send(data);
+    // res.send(data);
+    sendResponse(res, 200, data, null);
   } catch (err) {
-    console.log("error in controller: ", err);
-    res.status(400).send(err);
+    // console.log("error in controller: ", err);
+    // res.status(400).send(err);
+    // sendResponse(res, 400, null, err);
+    next(err);
   }
 };
 
-exports.delete = async (req, res) => {
+exports.delete = async (req, res, next) => {
   try {
     let data = await startupService.delete(req);
-    res.send(data);
+    // res.send(data);
+    sendResponse(res, 200, data, null);
   } catch (err) {
-    console.log("error in controller: ", err);
-    res.status(400).send(err);
+    // console.log("error in controller: ", err);
+    // res.status(400).send(err);
+    // sendResponse(res, 400, null, err);
+    next(err);
   }
 };
 
-exports.arrival = async (req, res) => {
+exports.arrival = async (req, res, next) => {
   try {
     console.log("arrived to controller successfully");
     // let newStartups = await Startup.bulkCreate([
