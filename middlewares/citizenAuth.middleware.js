@@ -25,7 +25,9 @@ let token = async (req, res, next) => {
   } catch (err) {
     // console.log("error in middleware: ", err);
     // res.status(400).send(err);
-    sendResponse(res, 400, null, err);
+    // sendResponse(res, 400, null, err);
+    if (!err.code) console.log("error in citizen auth middleware: ", err);
+    next(err);
   }
 };
 

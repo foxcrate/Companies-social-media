@@ -11,7 +11,11 @@ const validateRequestSchema = (req, res, next) => {
     });
 
     // return res.status(400).json({ validationErrors: errorsFormated });
-    return sendResponse(res, 400, null, {
+    // return sendResponse(res, 400, null, {
+    //   code: "VALIDATION_ERROR",
+    //   msg: errorsFormated,
+    // });
+    next({
       code: "VALIDATION_ERROR",
       msg: errorsFormated,
     });

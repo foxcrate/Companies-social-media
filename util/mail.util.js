@@ -47,7 +47,8 @@ exports.sendPasswordResetMailToCitizen = async (email, link) => {
     }
     // console.log("emailSent in util:", emailSent);
   } catch (err) {
-    console.log("error in mail: ", err);
+    // console.log("error in mail: ", err);
+    if (!err.code) console.log("error in mail util: ", err);
     throw { code: "UNABLE_TO_SEND_EMAIL" };
   }
 };

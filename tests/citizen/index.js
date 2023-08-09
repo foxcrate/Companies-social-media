@@ -2,7 +2,7 @@ const supertest = require("supertest");
 const app = require("../../app");
 const signupTestCases = require("../citizen/signup");
 const signinTestCases = require("../citizen/signin");
-const resettingPasswordTestCases = require("../citizen/resettingPassword");
+const sendResetPasswordEmailTestCases = require("./sendResetPasswordEmail");
 const authenticateRoutesTestCases = require("../citizen/authenticateRoutes");
 
 module.exports = () => {
@@ -12,7 +12,7 @@ module.exports = () => {
 
     signupTestCases();
     signinTestCases();
-    resettingPasswordTestCases();
+    sendResetPasswordEmailTestCases();
     authenticateRoutesTestCases();
   });
 };

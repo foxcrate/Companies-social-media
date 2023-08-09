@@ -4,8 +4,9 @@ exports.getAll = async (req) => {
   try {
     let allStartups = await Startup.findAll();
     return allStartups;
-  } catch (error) {
-    throw error;
+  } catch (err) {
+    if (!err.code) console.log("error in startup service: ", err);
+    throw err;
   }
 };
 
@@ -14,8 +15,9 @@ exports.getOne = async (req) => {
     let theStartup = await Startup.findByPk(req.params.id);
     if (!theStartup) throw { code: "STARTUP_NOT_FOUND" };
     return theStartup;
-  } catch (error) {
-    throw error;
+  } catch (err) {
+    if (!err.code) console.log("error in startup service: ", err);
+    throw err;
   }
 };
 
@@ -37,8 +39,9 @@ exports.create = async (req) => {
       applicantId: req.body.applicantId,
     });
     return newStartup;
-  } catch (error) {
-    throw error;
+  } catch (err) {
+    if (!err.code) console.log("error in startup service: ", err);
+    throw err;
   }
 };
 
@@ -64,8 +67,9 @@ exports.update = async (req) => {
       applicantId: req.body.applicantId,
     });
     return updatedStartup;
-  } catch (error) {
-    throw error;
+  } catch (err) {
+    if (!err.code) console.log("error in startup service: ", err);
+    throw err;
   }
 };
 
@@ -75,7 +79,8 @@ exports.delete = async (req) => {
     if (!theStartup) throw { code: "STARTUP_NOT_FOUND" };
     let deletedStartup = await theStartup.destroy();
     return deletedStartup;
-  } catch (error) {
-    throw error;
+  } catch (err) {
+    if (!err.code) console.log("error in startup service: ", err);
+    throw err;
   }
 };

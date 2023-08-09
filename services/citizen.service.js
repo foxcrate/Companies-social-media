@@ -20,8 +20,9 @@ exports.register = async (body) => {
       });
       return newCitizen;
     }
-  } catch (error) {
-    throw error;
+  } catch (err) {
+    if (!err.code) console.log("error in citizen service: ", err);
+    throw err;
   }
 };
 
@@ -48,8 +49,45 @@ exports.signin = async (body) => {
       });
       return "Bearer " + token;
     }
-  } catch (error) {
-    throw error;
+  } catch (err) {
+    if (!err.code) console.log("error in citizen service: ", err);
+    throw err;
+  }
+};
+
+exports.sendResetPasswordMail = async (body) => {
+  try {
+    //Store Requested Mail
+    const email = body.email;
+
+    //Get Citizen From Database
+    let citizen = await Citizen.findOne({ where: { email: email } });
+
+    //Check If Client Exists
+    if (!citizen) throw { code: "CITIZEN_NOT_FOUND" };
+
+    const token = jwt.sign(
+      { citizen_id: citizen.id, citizen_email: citizen.email },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "10m",
+      }
+    );
+
+    console.log("token", token);
+
+    let link = `${process.env.APP_HOST}:${process.env.PORT}/reset_password/${token}`;
+
+    // try {
+    let emailSent = await mail.sendPasswordResetMailToCitizen(email, link);
+    console.log("emailSent:", emailSent);
+    if (emailSent) {
+      return "Email Sent";
+    }
+  } catch (err) {
+    if (!err.code) console.log("error in citizen service: ", err);
+    // throw { code: "UNABLE_TO_SEND_EMAIL" };
+    throw err;
   }
 };
 
@@ -89,46 +127,10 @@ exports.resetPassword = async (token, password) => {
 
     return citizen_updated;
   } catch (err) {
-    console.log("error in service:", err);
+    if (!err.code) console.log("error in citizen service: ", err);
     // if (err instanceof JsonWebTokenError) {
     //   throw { code: "JWT_ERROR" };
     // }
     throw err;
-  }
-};
-
-exports.sendResetPasswordMail = async (body) => {
-  try {
-    //Store Requested Mail
-    const email = body.email;
-
-    //Get Citizen From Database
-    let citizen = await Citizen.findOne({ where: { email: email } });
-
-    //Check If Client Exists
-    if (!citizen) throw { code: "CITIZEN_NOT_FOUND" };
-
-    const token = jwt.sign(
-      { citizen_id: citizen.id, citizen_email: citizen.email },
-      process.env.JWT_SECRET,
-      {
-        expiresIn: "10m",
-      }
-    );
-
-    console.log("token", token);
-
-    let link = `${process.env.APP_HOST}:${process.env.PORT}/reset_password/${token}`;
-
-    // try {
-    let emailSent = await mail.sendPasswordResetMailToCitizen(email, link);
-    console.log("emailSent:", emailSent);
-    if (emailSent) {
-      return "Email Sent";
-    }
-  } catch (error) {
-    console.log("error in citizen email service:", error);
-    // throw { code: "UNABLE_TO_SEND_EMAIL" };
-    throw error;
   }
 };

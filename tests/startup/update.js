@@ -27,7 +27,7 @@ module.exports = () => {
     ],
   };
   describe("Update Startup", () => {
-    let theId = 8;
+    let theId = 9;
     test("Validate form fields", async () => {
       let res = await supertest(app)
         .put(`${process.env.API_V1_URL}/startups/${theId}`)

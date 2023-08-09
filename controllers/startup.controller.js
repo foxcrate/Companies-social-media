@@ -17,6 +17,7 @@ exports.getAll = async (req, res, next) => {
     // console.log("error in controller: ", err);
     // err = util.inspect(err, true, null);
     // sendResponse(res, 400, null, err);
+    if (!err.code) console.log("error in startup controller: ", err);
     next(err);
   }
 };
@@ -30,6 +31,7 @@ exports.getOne = async (req, res, next) => {
     // console.log("error in controller: ", err);
     // res.status(400).send(err);
     // sendResponse(res, 400, null, err);
+    if (!err.code) console.log("error in startup controller: ", err);
     next(err);
   }
 };
@@ -43,6 +45,7 @@ exports.create = async (req, res, next) => {
     // console.log("error in controller: ", err);
     // res.status(400).send(err);
     // sendResponse(res, 400, null, err);
+    if (!err.code) console.log("error in startup controller: ", err);
     next(err);
   }
 };
@@ -56,6 +59,7 @@ exports.update = async (req, res, next) => {
     // console.log("error in controller: ", err);
     // res.status(400).send(err);
     // sendResponse(res, 400, null, err);
+    if (!err.code) console.log("error in startup controller: ", err);
     next(err);
   }
 };
@@ -69,13 +73,14 @@ exports.delete = async (req, res, next) => {
     // console.log("error in controller: ", err);
     // res.status(400).send(err);
     // sendResponse(res, 400, null, err);
+    if (!err.code) console.log("error in startup controller: ", err);
     next(err);
   }
 };
 
 exports.arrival = async (req, res, next) => {
   try {
-    console.log("arrived to controller successfully");
+    // console.log("arrived to controller successfully");
     // let newStartups = await Startup.bulkCreate([
     //   {
     //     name: "startup1",

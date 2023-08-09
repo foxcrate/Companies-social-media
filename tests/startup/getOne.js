@@ -21,7 +21,7 @@ module.exports = () => {
     test("Return the startup", async () => {
       let returnObject = {
         id: 8,
-        name: "Michael_Williams_694.3165853296478-updated",
+        name: "John_Smith_579.4442381229139-updated",
         statue: "Pending",
         description: "We making beautiful food",
         applicantId: 1,

@@ -38,6 +38,7 @@ router.post(
   "/send_reset_password_mail",
   sendForgetPasswordEmailSchema,
   validateRequestSchema,
+  citizenAuth,
   citizenController.sendResetPasswordMail
 );
 
