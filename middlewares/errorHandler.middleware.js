@@ -1,4 +1,4 @@
-const sendResponse = require("../util/sendResponse.util");
+const sendResponse = require("../utils/sendResponse.util");
 
 module.exports = async (err, req, res, next) => {
   try {
@@ -6,7 +6,8 @@ module.exports = async (err, req, res, next) => {
     if (err.code) {
       sendResponse(res, 400, null, err);
     } else {
-      sendResponse(res, 400, null, { code: "SERVER_ERROR" });
+      // sendResponse(res, 400, null, { code: "SERVER_ERROR" });
+      sendResponse(res, 500, null, err);
     }
   } catch (error) {
     // throw error;

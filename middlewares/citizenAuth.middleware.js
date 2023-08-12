@@ -1,9 +1,9 @@
 const { Citizen } = require("../models");
 const jwt = require("jsonwebtoken");
-const sendResponse = require("../util/sendResponse.util");
+const sendResponse = require("../utils/sendResponse.util");
 
 let token = async (req, res, next) => {
-  console.log("citizen middleware");
+  console.log("citizen auth middleware");
   try {
     let authorizationHeader = req.header("Authorization");
     // console.log("authorizationHeader: ", authorizationHeader);
@@ -18,15 +18,18 @@ let token = async (req, res, next) => {
         throw { code: "JWT_ERROR" };
       }
       console.log("data in bearerToken: ", data);
-      console.log("data.id:", data.id);
-      req.citizen_id = data.id;
+      console.log("data.citizen_id:", data.citizen_id);
+      if (!data.citizen_id) {
+        throw { code: "JWT_ERROR" };
+      }
+      req.citizen_id = data.citizen_id;
       next();
     });
   } catch (err) {
     // console.log("error in middleware: ", err);
     // res.status(400).send(err);
     // sendResponse(res, 400, null, err);
-    if (!err.code) console.log("error in citizen auth middleware: ", err);
+    // if (!err.code) console.log("error in citizen auth middleware: ", err);
     next(err);
   }
 };

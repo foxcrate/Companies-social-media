@@ -7,7 +7,24 @@
     "start": "killall -9 node;NODE_ENV=development nodemon index.js",
     "migrate": "npx sequelize-cli db:migrate",
     "test": "NODE_ENV=test jest --detectOpenHandles --forceExit",
+    "test_coverage": "NODE_ENV=test jest --coverage --detectOpenHandles --forceExit",
     "start_test": "killall -9 node;NODE_ENV=test nodemon index.js"
+  },
+  "jest": {
+    "testRegex": "(/__jests__/.*|(\\.|/)(jest|spec))\\.[jt]sx?$",
+    "coveragePathIgnorePatterns": [
+      "node_modules",
+      "test-config",
+      "interfaces",
+      "jestGlobalMocks.ts",
+      ".module.ts",
+      "<rootDir>/src/app/main.ts",
+      ".mock.ts",
+      "./models",
+      "./tests",
+      "./routes",
+      "./validationSchema"
+    ]
   },
   "keywords": [],
   "author": "",

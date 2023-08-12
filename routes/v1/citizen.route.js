@@ -42,10 +42,10 @@ router.post(
   citizenController.sendResetPasswordMail
 );
 
-router.post(
-  "/test_route_authentication",
-  citizenAuth,
-  citizenController.arrival
-);
+// router.post(
+//   "/test_route_authentication",
+//   citizenAuth,
+//   citizenController.arrival
+// );
 
 module.exports = router;

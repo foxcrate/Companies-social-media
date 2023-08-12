@@ -1,6 +1,6 @@
 const { validationResult } = require("express-validator");
 const { ValidationError } = require("sequelize");
-const sendResponse = require("../util/sendResponse.util");
+const sendResponse = require("../utils/sendResponse.util");
 
 const validateRequestSchema = (req, res, next) => {
   const errors = validationResult(req);

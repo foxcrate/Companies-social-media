@@ -1,8 +1,8 @@
 const supertest = require("supertest");
 const app = require("../../app");
 const { Startup } = require("../../models");
-const { generateRandomName } = require("../util/createRandomNames");
-const savedErrors = require("../../util/errors");
+const { generateRandomName } = require("../utilsForTest/createRandomNames");
+const savedErrors = require("../../utils/errors");
 
 module.exports = () => {
   describe("Get A Startup", () => {

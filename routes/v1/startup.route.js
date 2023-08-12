@@ -1,7 +1,6 @@
 const express = require("express");
 const validateRequestSchema = require("../../middlewares/validateRequestSchema.middleware");
 const startupCreateSchema = require("../../validationSchema/startup/create.schema");
-const startupCheckIdSchema = require("../../validationSchema/startup/checkId.schema");
 const startupController = require("../../controllers/startup.controller");
 
 const router = express.Router();
@@ -10,12 +9,7 @@ const router = express.Router();
 
 router.get("/", startupController.getAll);
 
-router.get(
-  "/:id",
-  // startupCheckIdSchema,
-  // validateRequestSchema,
-  startupController.getOne
-);
+router.get("/:id", startupController.getOne);
 
 router.post(
   "/",
@@ -26,19 +20,13 @@ router.post(
 
 router.put(
   "/:id",
-  // startupCheckIdSchema,
   startupCreateSchema,
   validateRequestSchema,
   startupController.update
 );
 
-router.delete(
-  "/:id",
-  // startupCheckIdSchema,
-  // validateRequestSchema,
-  startupController.delete
-);
+router.delete("/:id", startupController.delete);
 
-router.post("/test", startupController.arrival);
+// router.post("/test", startupController.arrival);
 
 module.exports = router;

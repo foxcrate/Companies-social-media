@@ -2,7 +2,7 @@ const { Citizen } = require("../models");
 const bcrypt = require("bcrypt");
 const { JsonWebTokenError } = require("jsonwebtoken");
 const jwt = require("jsonwebtoken");
-const mail = require("../util/mail.util");
+const mail = require("../utils/mail.util");
 
 exports.register = async (body) => {
   try {
@@ -21,7 +21,7 @@ exports.register = async (body) => {
       return newCitizen;
     }
   } catch (err) {
-    if (!err.code) console.log("error in citizen service: ", err);
+    // if (!err.code) console.log("error in citizen service: ", err);
     throw err;
   }
 };
@@ -44,13 +44,17 @@ exports.signin = async (body) => {
       if (!rightPassword) {
         throw { code: "WRONG_PASSWORD" };
       }
-      let token = jwt.sign({ id: foundedAccount.id }, process.env.JWT_SECRET, {
-        expiresIn: "7d",
-      });
+      let token = jwt.sign(
+        { citizen_id: foundedAccount.id },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: "7d",
+        }
+      );
       return "Bearer " + token;
     }
   } catch (err) {
-    if (!err.code) console.log("error in citizen service: ", err);
+    // if (!err.code) console.log("error in citizen service: ", err);
     throw err;
   }
 };
@@ -79,13 +83,13 @@ exports.sendResetPasswordMail = async (body) => {
     let link = `${process.env.APP_HOST}:${process.env.PORT}/reset_password/${token}`;
 
     // try {
-    let emailSent = await mail.sendPasswordResetMailToCitizen(email, link);
+    let emailSent = await mail.sendPasswordResetMail(email, link, "Citizen");
     console.log("emailSent:", emailSent);
     if (emailSent) {
       return "Email Sent";
     }
   } catch (err) {
-    if (!err.code) console.log("error in citizen service: ", err);
+    // if (!err.code) console.log("error in citizen service: ", err);
     // throw { code: "UNABLE_TO_SEND_EMAIL" };
     throw err;
   }
@@ -127,7 +131,7 @@ exports.resetPassword = async (token, password) => {
 
     return citizen_updated;
   } catch (err) {
-    if (!err.code) console.log("error in citizen service: ", err);
+    // if (!err.code) console.log("error in citizen service: ", err);
     // if (err instanceof JsonWebTokenError) {
     //   throw { code: "JWT_ERROR" };
     // }

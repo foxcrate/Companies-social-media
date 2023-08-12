@@ -11,6 +11,7 @@ module.exports = (response, statusCode, data, error) => {
       };
     } else if (statusCode == 400) {
       console.log("error:", error);
+
       if (error.code == "VALIDATION_ERROR") {
         returnObject = {
           data: null,
@@ -25,10 +26,16 @@ module.exports = (response, statusCode, data, error) => {
           },
         };
       }
+    } else if (statusCode == 500) {
+      returnObject = {
+        data: null,
+        error: { code: "SERVER_ERROR", msg: error },
+      };
+      // return response.status(statusCode).send(returnObject);
     }
     console.log("returnObject in util: ", returnObject);
     response.status(statusCode).send(returnObject);
   } catch (err) {
-    if (!err.code) console.log("error in sendResponse util: ", err);
+    console.log("error in sendResponse util: ", err);
   }
 };
