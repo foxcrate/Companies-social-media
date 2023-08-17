@@ -17,10 +17,9 @@ exports.register = async (req, res, next) => {
 
 exports.signin = async (req, res, next) => {
   try {
-    let token = await citizenService.signin(req.body);
-    let return_data = { token: token };
+    let signinData = await citizenService.signin(req.body);
     // res.send(return_data);
-    sendResponse(res, 200, return_data, null);
+    sendResponse(res, 200, signinData, null);
   } catch (err) {
     // console.log("error in controller: ", err);
     // res.status(400).send(err);

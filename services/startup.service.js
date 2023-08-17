@@ -34,7 +34,7 @@ exports.create = async (req) => {
 
     let newStartup = await Startup.create({
       name: req.body.name,
-      statue: req.body.statue,
+      statue: "Pending",
       description: req.body.description,
       applicantId: req.body.applicantId,
     });

@@ -53,7 +53,7 @@ exports.signin = async (body) => {
           expiresIn: "7d",
         }
       );
-      return "Bearer " + token;
+      return { token: "Bearer " + token, applicantId: foundedAccount.id };
     }
   } catch (err) {
     // if (!err.code) console.log("error in applicant service: ", err);

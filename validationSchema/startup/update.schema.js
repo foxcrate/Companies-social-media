@@ -14,11 +14,11 @@ const schema = [
   //     }
   //   }
   // }),
-  // body("statue")
-  //   // .notEmpty()
-  //   // .withMessage("statue can't be empty")
-  //   .isIn(["Pending", "Accepted", "Rejected"])
-  //   .withMessage("unsuitable statue"),
+  body("statue")
+    // .notEmpty()
+    // .withMessage("statue can't be empty")
+    .isIn(["Pending", "Accepted", "Rejected"])
+    .withMessage("unsuitable statue"),
   body("description")
     // .isString()
     .isLength({ min: 10 })

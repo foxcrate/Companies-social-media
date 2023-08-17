@@ -1,18 +1,22 @@
 const express = require("express");
 const validateRequestSchema = require("../../middlewares/validateRequestSchema.middleware");
 const startupCreateSchema = require("../../validationSchema/startup/create.schema");
+const startupUpdateSchema = require("../../validationSchema/startup/update.schema");
 const startupController = require("../../controllers/startup.controller");
+const applicantAuth = require("../../middlewares/applicantAuth.middleware");
+const citizenAuth = require("../../middlewares/citizenAuth.middleware");
 
 const router = express.Router();
 
 // console.log("citizenRegisterSchema: ", citizenRegisterSchema);
 
-router.get("/", startupController.getAll);
+router.get("/", citizenAuth, startupController.getAll);
 
 router.get("/:id", startupController.getOne);
 
 router.post(
   "/",
+  applicantAuth,
   startupCreateSchema,
   validateRequestSchema,
   startupController.create
@@ -20,7 +24,8 @@ router.post(
 
 router.put(
   "/:id",
-  startupCreateSchema,
+  applicantAuth,
+  startupUpdateSchema,
   validateRequestSchema,
   startupController.update
 );
