@@ -17,13 +17,12 @@ app.options("*", cors());
 app.use(bodyParser.json());
 app.use(morgan("tiny"));
 
+app.get("/", (req, res) => {
+  res.send("Hello, Fawzy!");
+});
 app.use(`${process.env.API_V1_URL}/citizens`, citizenRoutes);
 app.use(`${process.env.API_V1_URL}/applicants`, applicantRoutes);
 app.use(`${process.env.API_V1_URL}/startups`, startupRoutes);
-
-router.get("/", (req, res) => {
-  res.send("Hello, Fawzy!");
-});
 
 app.use(errorHandler);
 
