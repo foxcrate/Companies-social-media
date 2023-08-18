@@ -3,6 +3,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const cors = require("cors");
+const router = express.Router();
 require("dotenv/config");
 const citizenRoutes = require("./routes/v1/citizen.route");
 const applicantRoutes = require("./routes/v1/applicant.route");
@@ -19,6 +20,10 @@ app.use(morgan("tiny"));
 app.use(`${process.env.API_V1_URL}/citizens`, citizenRoutes);
 app.use(`${process.env.API_V1_URL}/applicants`, applicantRoutes);
 app.use(`${process.env.API_V1_URL}/startups`, startupRoutes);
+
+router.get("/", (req, res) => {
+  res.send("Hello, Fawzy!");
+});
 
 app.use(errorHandler);
 
