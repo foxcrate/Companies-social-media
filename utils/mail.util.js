@@ -6,13 +6,16 @@ exports.sendPasswordResetMail = async (email, link, accountType) => {
     let transporter = nodemailer.createTransport({
       host: "smtp.gmail.com",
       auth: {
-        user: process.env.EMAIL,
-        pass: process.env.EMAIL_PASSWORD,
+        // user: process.env.EMAIL,
+        user: "ahmedfocus19@gmail.com",
+        // pass: process.env.EMAIL_PASSWORD,
+        pass: "oxnyuuorfrgogmes",
       },
     });
 
     const options = {
-      from: process.env.EMAIL,
+      // from: process.env.EMAIL,
+      from: "ahmedfocus19@gmail.com",
       to: email,
       subject: `GIZ Platform ${accountType} Portal - Reset Password`,
       html:
