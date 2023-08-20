@@ -12,8 +12,7 @@ let token = async (req, res, next) => {
         code: "NO_BEARER_TOKEN",
       };
     let bearerToken = authorizationHeader.split(" ")[1];
-    // jwt.verify(bearerToken, process.env.JWT_SECRET, (err, data) => {
-    jwt.verify(bearerToken, "123qweasdzxc", (err, data) => {
+    jwt.verify(bearerToken, process.env.JWT_SECRET, (err, data) => {
       if (err) {
         console.log("jwt error: ", err);
         throw { code: "JWT_ERROR" };

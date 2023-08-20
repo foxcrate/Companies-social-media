@@ -17,21 +17,9 @@ app.options("*", cors());
 app.use(bodyParser.json());
 app.use(morgan("tiny"));
 
-app.get("/", (req, res) => {
-  res.send("Hello, Fawzy!" + process.env.API_V1_URL);
-});
-
-app.get(`/api/v1`, (req, res) => {
-  res.send("right");
-});
-
-// app.use(`${process.env.API_V1_URL}/citizens`, citizenRoutes);
-// app.use(`${process.env.API_V1_URL}/applicants`, applicantRoutes);
-// app.use(`${process.env.API_V1_URL}/startups`, startupRoutes);
-
-app.use(`/api/v1/citizens`, citizenRoutes);
-app.use(`/api/v1/applicants`, applicantRoutes);
-app.use(`/api/v1/startups`, startupRoutes);
+app.use(`${process.env.API_V1_URL}/citizens`, citizenRoutes);
+app.use(`${process.env.API_V1_URL}/applicants`, applicantRoutes);
+app.use(`${process.env.API_V1_URL}/startups`, startupRoutes);
 
 app.use(errorHandler);
 

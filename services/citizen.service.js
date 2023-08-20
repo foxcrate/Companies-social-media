@@ -46,8 +46,7 @@ exports.signin = async (body) => {
       }
       let token = jwt.sign(
         { citizen_id: foundedAccount.id },
-        // process.env.JWT_SECRET,
-        "123qweasdzxc",
+        process.env.JWT_SECRET,
         {
           expiresIn: "7d",
         }
@@ -73,8 +72,7 @@ exports.sendResetPasswordMail = async (body) => {
 
     const token = jwt.sign(
       { citizen_id: citizen.id, citizen_email: citizen.email },
-      // process.env.JWT_SECRET,
-      "123qweasdzxc",
+      process.env.JWT_SECRET,
       {
         expiresIn: "10m",
       }
@@ -102,8 +100,7 @@ exports.resetPassword = async (token, password) => {
   // console.log("token", token);
 
   try {
-    // let { citizen_email } = jwt.verify(token, process.env.JWT_SECRET);
-    let { citizen_email } = jwt.verify(token, "123qweasdzxc");
+    let { citizen_email } = jwt.verify(token, process.env.JWT_SECRET);
     if (!citizen_email) {
       throw { code: "WRONG_JWT_ERROR" };
     }
