@@ -23,7 +23,14 @@ exports.getOne = async (req) => {
 
 exports.create = async (req) => {
   try {
-    let startup = await Startup.findOne({ where: { name: req.body.name } });
+    let startup = await Startup.findOne({
+      where: { applicantId: req.body.applicantId },
+    });
+    if (startup) {
+      throw { code: "APPLICANT_HAS_STARTUP" };
+    }
+
+    startup = await Startup.findOne({ where: { name: req.body.name } });
     if (startup) {
       throw { code: "REPEATED_NAME" };
     }

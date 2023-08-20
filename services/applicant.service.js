@@ -1,4 +1,4 @@
-const { Applicant } = require("../models");
+const { Applicant, Startup } = require("../models");
 const bcrypt = require("bcrypt");
 const { JsonWebTokenError } = require("jsonwebtoken");
 const jwt = require("jsonwebtoken");
@@ -54,6 +54,23 @@ exports.signin = async (body) => {
         }
       );
       return { token: "Bearer " + token, applicantId: foundedAccount.id };
+    }
+  } catch (err) {
+    // if (!err.code) console.log("error in applicant service: ", err);
+    throw err;
+  }
+};
+
+exports.getStartup = async (applicantId) => {
+  try {
+    let foundedStartup = await Startup.findOne({
+      where: { applicantId: applicantId },
+    });
+    if (!foundedStartup) {
+      throw { code: "STARTUP_NOT_FOUND" };
+    } else {
+      console.log("foundedStartup:", foundedStartup);
+      return foundedStartup;
     }
   } catch (err) {
     // if (!err.code) console.log("error in applicant service: ", err);

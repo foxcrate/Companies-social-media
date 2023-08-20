@@ -24,3 +24,5 @@ app.use(`${process.env.API_V1_URL}/startups`, startupRoutes);
 app.use(errorHandler);
 
 module.exports = app;
+
+// killall -9 node;

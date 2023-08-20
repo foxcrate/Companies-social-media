@@ -28,6 +28,20 @@ exports.signin = async (req, res, next) => {
   }
 };
 
+exports.getStartup = async (req, res, next) => {
+  try {
+    let startupData = await applicantService.getStartup(req.params.applicantId);
+    // res.send(return_data);
+    sendResponse(res, 200, startupData, null);
+  } catch (err) {
+    // console.log("error in controller: ", err);
+    // res.status(400).send(err);
+    // sendResponse(res, 400, null, err);
+    // if (!err.code) console.log("error in applicant controller: ", err);
+    next(err);
+  }
+};
+
 exports.resetPassword = async (req, res, next) => {
   try {
     // console.log("req.body:", req.body.token);

@@ -25,7 +25,7 @@ router.post(
 router.put(
   "/:id",
   applicantAuth,
-  startupUpdateSchema,
+  startupCreateSchema,
   validateRequestSchema,
   startupController.update
 );

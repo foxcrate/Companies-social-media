@@ -25,6 +25,12 @@ router.post(
   applicantController.signin
 );
 
+router.get(
+  "/:applicantId/startup",
+  applicantAuth,
+  applicantController.getStartup
+);
+
 router.post(
   "/reset_password",
   applicantAuth,
