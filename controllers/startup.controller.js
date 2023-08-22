@@ -1,4 +1,4 @@
-const { Startup, Applicant } = require("../models");
+const { Startup, Applicant, Like, Comment } = require("../models");
 const startupService = require("../services/startup.service");
 const paginate = require("../utils/paginate.util");
 const util = require("util");
@@ -85,11 +85,66 @@ exports.delete = async (req, res, next) => {
   }
 };
 
-// exports.arrival = async (req, res, next) => {
-// try {
-//   res.status(200).send("Alo");
-// } catch (err) {
-//   console.log("err:", err);
-//   res.status(400).send(err);
-// }
-// };
+exports.showComments = async (req, res, next) => {
+  try {
+    let data = await startupService.all_comments(req);
+    sendResponse(res, 200, data, null);
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.addComment = async (req, res, next) => {
+  try {
+    let data = await startupService.addComment(req);
+    sendResponse(res, 200, data, null);
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.editComment = async (req, res, next) => {
+  try {
+    let data = await startupService.editComment(req);
+    sendResponse(res, 200, data, null);
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.deleteComment = async (req, res, next) => {
+  try {
+    let data = await startupService.deleteComment(req);
+    sendResponse(res, 200, data, null);
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.showLikes = async (req, res, next) => {
+  try {
+    // let all_likes = await Like.findAll({ raw: true });
+    let data = await startupService.all_likes(req);
+    sendResponse(res, 200, data, null);
+  } catch (err) {
+    next(err);
+  }
+};
+
+exports.addRemoveLike = async (req, res, next) => {
+  try {
+    let previousLike = await Like.findOne({
+      where: { CitizenId: req.citizen_id },
+    });
+    if (previousLike) {
+      console.log("foundedLike");
+      await previousLike.destroy();
+      sendResponse(res, 200, "Like removed", null);
+      return;
+    }
+    let data = await startupService.addRemoveLike(req);
+    sendResponse(res, 200, data, null);
+  } catch (err) {
+    next(err);
+  }
+};

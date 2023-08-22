@@ -21,6 +21,7 @@ enErrors
   .set("NO_BEARER_TOKEN", "Authorization Bearer token should be provided")
   .set("JWT_ERROR", "Invalid bearer token")
   .set("STARTUP_NOT_FOUND", "Startup not found")
+  .set("COMMENT_NOT_FOUND", "Comment not found")
   .set("WRONG_JWT_ERROR", "wrong bearer token")
   .set("UNAVAILABLE_PAGE", "page number isn't correct")
   .set("SERVER_ERROR", "Server problem, will be fixed soon");
@@ -41,6 +42,7 @@ arErrors
   .set("NO_BEARER_TOKEN", "Authorization Bearer token should be provided")
   .set("JWT_ERROR", "Invalid bearer token")
   .set("STARTUP_NOT_FOUND", "الشركة غير موجودة")
+  .set("COMMENT_NOT_FOUND", "التعليق غير موجود")
   .set("WRONG_JWT_ERROR", "wrong bearer token")
   .set("UNAVAILABLE_PAGE", "رقم الصفحة غير صحيح")
   .set("SERVER_ERROR", "حدث مشكلة في السيرفر، سوف تحل قريبا");

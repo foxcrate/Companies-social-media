@@ -14,8 +14,8 @@ module.exports = (sequelize, DataTypes) => {
   }
   Like.init(
     {
-      citizenId: DataTypes.INTEGER,
-      startupId: DataTypes.INTEGER,
+      CitizenId: DataTypes.INTEGER,
+      StartupId: DataTypes.INTEGER,
     },
     {
       sequelize,
