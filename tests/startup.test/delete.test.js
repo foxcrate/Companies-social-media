@@ -5,6 +5,8 @@ const { generateRandomName } = require("../utilsForTest/createRandomNames");
 const savedErrors = require("../../utils/errors");
 
 module.exports = () => {
+  let normal_token =
+    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBsaWNhbnRfaWQiOjMsImlhdCI6MTY5Mjc0ODE2MywiZXhwIjoxNjkzMzUyOTYzfQ.yCDoOVHaBaGSvDb7XRLqKoeowah0iPQE_cYs6VcP_HY";
   describe("Delete Startup", () => {
     test("Check non existing startup id", async () => {
       let error = {
@@ -14,6 +16,7 @@ module.exports = () => {
       let theId = 2;
       let res = await supertest(app)
         .delete(`${process.env.API_V1_URL}/startups/${theId}`)
+        .set("Authorization", normal_token)
         .send();
       expect(res.statusCode).toBe(400);
       expect(res.body.error).toEqual(error);
@@ -31,6 +34,7 @@ module.exports = () => {
 
       let res = await supertest(app)
         .delete(`${process.env.API_V1_URL}/startups/${returnObject.id}`)
+        .set("Authorization", normal_token)
         .send();
 
       let recordsAfterDelete = await Startup.count();

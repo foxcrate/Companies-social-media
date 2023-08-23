@@ -5,9 +5,9 @@ const savedErrors = require("../../utils/errors");
 module.exports = () => {
   describe("Reset Password Mail", () => {
     let normal_token =
-      "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBsaWNhbnRfaWQiOjMsImlhdCI6MTY5MTc1NDEyMCwiZXhwIjoxNjkyMzU4OTIwfQ.1i6MIw9e9MVG-QMlzYrob11M5rcyrZS2w1zA40KdGLU";
+      "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBsaWNhbnRfaWQiOjMsImlhdCI6MTY5Mjc0ODE2MywiZXhwIjoxNjkzMzUyOTYzfQ.yCDoOVHaBaGSvDb7XRLqKoeowah0iPQE_cYs6VcP_HY";
     let changePasswordToken =
-      "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBsaWNhbnRfaWQiOjMsImFwcGxpY2FudF9lbWFpbCI6ImFobWVkbXVzdGFmYS5wcm8xOUBnbWFpbC5jb20iLCJpYXQiOjE2OTE3NTgwODYsImV4cCI6MzMyMTc4MDA0ODZ9.GszZhXyaMj84_VVPGCOiJqBpmcTB-3gTTjm0UvCIYrA";
+      "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBsaWNhbnRfaWQiOjMsImFwcGxpY2FudF9lbWFpbCI6ImFobWVkbXVzdGFmYS5wcm8xOUBnbWFpbC5jb20iLCJpYXQiOjE2OTI3NTQ2NDIsImV4cCI6NDgxNjk1NzA0Mn0.uh37bfPwtrhq7Vhpxlhuowfy_Zj_6MjYOuyFzxRi4oA";
 
     test("applicant_email not found", async () => {
       let the_error = {
@@ -45,8 +45,9 @@ module.exports = () => {
         .post(`${process.env.API_V1_URL}/applicants/reset_password`)
         .set("Authorization", changePasswordToken)
         .send(body);
-      expect(res.statusCode).toBe(200);
+      console.log("res:", res);
       expect(res.body.data).toEqual(returnObjectData);
+      expect(res.statusCode).toBe(200);
     });
   });
 };

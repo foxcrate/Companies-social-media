@@ -5,6 +5,8 @@ const { generateRandomName } = require("../utilsForTest/createRandomNames");
 const savedErrors = require("../../utils/errors");
 
 module.exports = () => {
+  let normal_token =
+    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjaXRpemVuX2lkIjo0MiwiaWF0IjoxNjkyNzQ2NzAyLCJleHAiOjQ4MTY5NDkxMDJ9.aKYyKqTiYR9MetI6XEGd8X6-FVb3lR0FnEDu5J7udwo";
   describe("Get All Startups", () => {
     test("get the array of startups with right schema", async () => {
       let rightSchema = {
@@ -20,6 +22,7 @@ module.exports = () => {
       let startupsCount = await Startup.count();
       let res = await supertest(app)
         .get(`${process.env.API_V1_URL}/startups`)
+        .set("Authorization", normal_token)
         .send();
       // console.log('');
       expect(res.statusCode).toBe(200);

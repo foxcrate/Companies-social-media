@@ -19,17 +19,23 @@ module.exports = () => {
       expect(res.body.error).toEqual(error);
     });
     test("Return the startup", async () => {
-      let returnObject = {
-        id: 8,
-        name: "John_Smith_579.4442381229139-updated",
+      let newStartup = await Startup.create({
+        name: "alo 6",
         statue: "Pending",
-        description: "We making beautiful food",
+        description: "alo alo",
         applicantId: 1,
-        createdAt: "2023-08-06T08:20:45.000Z",
+      });
+      let returnObject = {
+        id: newStartup.id,
+        name: "alo 6",
+        statue: "Pending",
+        description: "alo alo",
+        applicantId: 1,
+        createdAt: expect.any(String),
         updatedAt: expect.any(String),
         ApplicantId: 1,
       };
-      let theId = 8;
+      let theId = newStartup.id;
       let res = await supertest(app)
         .get(`${process.env.API_V1_URL}/startups/${theId}`)
         .send();

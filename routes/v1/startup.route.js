@@ -29,7 +29,7 @@ router.put(
   startupController.update
 );
 
-router.delete("/:id", startupController.delete);
+router.delete("/:id", applicantAuth, startupController.delete);
 
 router.post(
   "/:id/add_startup_comment",

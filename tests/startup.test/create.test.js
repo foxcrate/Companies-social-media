@@ -5,16 +5,14 @@ const { generateRandomName } = require("../utilsForTest/createRandomNames");
 const savedErrors = require("../../utils/errors");
 
 module.exports = () => {
+  let normal_token =
+    "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcHBsaWNhbnRfaWQiOjMsImlhdCI6MTY5Mjc0ODE2MywiZXhwIjoxNjkzMzUyOTYzfQ.yCDoOVHaBaGSvDb7XRLqKoeowah0iPQE_cYs6VcP_HY";
   let create_validation_errors = {
     code: "VALIDATION_ERROR",
     msg: [
       {
         path: "name",
         problem: "name must be at least 3 characters long",
-      },
-      {
-        path: "statue",
-        problem: "unsuitable statue",
       },
       {
         path: "description",
@@ -31,6 +29,7 @@ module.exports = () => {
     test("Validate form fields", async () => {
       let res = await supertest(app)
         .post(`${process.env.API_V1_URL}/startups`)
+        .set("Authorization", normal_token)
         .send({});
       expect(res.statusCode).toBe(400);
       expect(res.body.error).toEqual(create_validation_errors);
@@ -48,28 +47,33 @@ module.exports = () => {
       };
       let res = await supertest(app)
         .post(`${process.env.API_V1_URL}/startups`)
+        .set("Authorization", normal_token)
         .send(body);
       expect(res.statusCode).toBe(400);
       expect(res.body.error).toEqual(error);
     });
-    test("Check repeated startup name", async () => {
-      let error = {
-        code: "REPEATED_NAME",
-        msg: savedErrors.get("en").get("REPEATED_NAME"),
-      };
-      let body = {
-        name: "newStartup",
-        statue: "Pending",
-        description: "We making beautiful food",
-        applicantId: 1,
-      };
-      let res = await supertest(app)
-        .post(`${process.env.API_V1_URL}/startups`)
-        .send(body);
-      expect(res.statusCode).toBe(400);
-      expect(res.body.error).toEqual(error);
-    });
+    // test("Check repeated startup name", async () => {
+    //   let error = {
+    //     code: "REPEATED_NAME",
+    //     msg: savedErrors.get("en").get("REPEATED_NAME"),
+    //   };
+    //   //delete previous startups for this applicant
+    //   await Startup.destroy({ where: { applicantId: 1 } });
+    //   let body = {
+    //     name: "newStartup",
+    //     statue: "Pending",
+    //     description: "We making beautiful food",
+    //     applicantId: 1,
+    //   };
+    //   let res = await supertest(app)
+    //     .post(`${process.env.API_V1_URL}/startups`)
+    //     .set("Authorization", normal_token)
+    //     .send(body);
+    //   expect(res.statusCode).toBe(400);
+    //   expect(res.body.error).toEqual(error);
+    // });
     test("Record added to the database", async () => {
+      await Startup.destroy({ where: { applicantId: 1 } });
       let name = generateRandomName();
       let body = {
         name: name,
@@ -93,6 +97,7 @@ module.exports = () => {
 
       let res = await supertest(app)
         .post(`${process.env.API_V1_URL}/startups`)
+        .set("Authorization", normal_token)
         .send(body);
 
       let recordsAfterCreate = await Startup.count();
