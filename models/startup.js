@@ -9,9 +9,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       Startup.belongsTo(models.Applicant);
-      Startup.hasMany(models.Comment);
-      Startup.hasMany(models.Like);
-      Startup.hasMany(models.Note);
+      Startup.hasMany(models.Comment, { onDelete: "CASCADE" });
+      Startup.hasMany(models.Like, { onDelete: "CASCADE" });
+      Startup.hasMany(models.Note, { onDelete: "CASCADE" });
     }
   }
   Startup.init(

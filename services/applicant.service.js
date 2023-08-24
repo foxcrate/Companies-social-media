@@ -95,7 +95,7 @@ exports.sendResetPasswordMail = async (body) => {
       { applicant_id: applicant.id, applicant_email: applicant.email },
       process.env.JWT_SECRET,
       {
-        expiresIn: "99y",
+        expiresIn: "10m",
       }
     );
 

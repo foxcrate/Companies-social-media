@@ -24,7 +24,7 @@ exports.getOne = async (req) => {
 exports.create = async (req) => {
   try {
     let startup = await Startup.findOne({
-      where: { applicantId: req.body.applicantId },
+      where: { applicantId: req.applicant_id },
     });
     if (startup) {
       throw { code: "APPLICANT_HAS_STARTUP" };
@@ -34,7 +34,7 @@ exports.create = async (req) => {
     if (startup) {
       throw { code: "REPEATED_NAME" };
     }
-    let applicant = await Applicant.findByPk(req.body.applicantId);
+    let applicant = await Applicant.findByPk(req.applicant_id);
     if (!applicant) {
       throw { code: "APPLICANT_NOT_FOUND" };
     }
@@ -43,7 +43,7 @@ exports.create = async (req) => {
       name: req.body.name,
       statue: "Pending",
       description: req.body.description,
-      applicantId: req.body.applicantId,
+      applicantId: req.applicant_id,
     });
     return newStartup;
   } catch (err) {

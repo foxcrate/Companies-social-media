@@ -31,12 +31,6 @@ router.put(
 
 router.delete("/:id", applicantAuth, startupController.delete);
 
-router.post(
-  "/:id/add_startup_comment",
-  citizenAuth,
-  startupController.addComment
-);
-
 router.get("/:id/likes", citizenAuth, startupController.showLikes);
 
 router.post("/:id/likes", citizenAuth, startupController.addRemoveLike);
